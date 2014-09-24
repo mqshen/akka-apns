@@ -33,8 +33,8 @@ object Dependencies {
 object Build extends sbt.Build {
 
   lazy val basicSettings = Seq(
-    organization := "goldratio",
-    version := "0.1.0-SNAPSHOT",
+    organization := "com.github.mqshen",
+    version := "0.1.0",
     scalaVersion := "2.10.4",
     scalacOptions ++= Seq("-unchecked", "-deprecation"),
     resolvers ++= Seq(
@@ -46,7 +46,7 @@ object Build extends sbt.Build {
       "krasserm at bintray" at "http://dl.bintray.com/krasserm/maven")
   )
 
-  lazy val mainProject = Project( "Campfile", file("."))
+  lazy val mainProject = Project( "akka-apns", file("."))
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
     .settings(releaseSettings: _*)
@@ -68,7 +68,7 @@ object Build extends sbt.Build {
     publishArtifact in Test := false,
     pomIncludeRepository := { (repo: MavenRepository) => false },
     pomExtra := (
-      <url>https://github.com/mqshen/spray-socketio</url>
+      <url>https://github.com/mqshen/akka-apns</url>
         <licenses>
           <license>
             <name>The Apache Software License, Version 2.0</name>

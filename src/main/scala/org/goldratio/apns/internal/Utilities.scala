@@ -1,9 +1,9 @@
 package org.goldratio.apns.internal
 
-import java.io.{ByteArrayOutputStream, DataOutputStream, IOException, InputStream}
+import java.io.{ ByteArrayOutputStream, DataOutputStream, IOException, InputStream }
 import java.security.KeyStore
 import java.util.regex.Pattern
-import javax.net.ssl.{KeyManagerFactory, SSLContext, TrustManagerFactory}
+import javax.net.ssl.{ KeyManagerFactory, SSLContext, TrustManagerFactory }
 
 /**
  * Created by goldratio on 9/14/14.

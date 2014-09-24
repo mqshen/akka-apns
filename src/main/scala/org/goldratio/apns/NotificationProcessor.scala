@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit
 import akka.actor._
 import akka.pattern._
 import akka.util.Timeout
-import com.typesafe.config.{Config, ConfigFactory}
-import org.goldratio.apns.internal.{ApnsConnectionSupervisor, ApnsDelegateImpl, ApnsNotification, Payload}
+import com.typesafe.config.{ Config, ConfigFactory }
+import org.goldratio.apns.internal.{ ApnsConnectionSupervisor, ApnsDelegateImpl, ApnsNotification, Payload }
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -59,10 +59,8 @@ object Test extends App {
   implicit val system = ActorSystem()
   val test = system.actorOf(NotificationProcessor.props, "apns")
   Thread.sleep(60000)
-  (1 to 2).foreach { i =>
+  (1 to 20).foreach { i =>
     val message = s"${i} st message"
     test ! Message("04a77581 8fb3de3b 3cec9b94 353a2168 a77f879c ea26fb9c b4d1f36e 193b6d24", message, i)
-    //test ! PoisonPill
   }
-
 }

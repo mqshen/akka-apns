@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import javax.net.SocketFactory
 import javax.net.ssl.SSLHandshakeException
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.{ Actor, ActorLogging, Props }
 import play.api.libs.json.Json
 
 /**
@@ -23,7 +23,7 @@ case object EVERY_HALF_HOUR extends ReconnectPolicy { val name = "EVERY_HALF_HOU
 case object EVERY_NOTIFICATION extends ReconnectPolicy { val name = "EVERY_NOTIFICATION" }
 
 //TODO alert can be map
-case class Payload(alert: String, badge: Int, sound: String = "", `content-available`: Int = 0)
+case class Payload(alert: String, badge: Int, sound: String = "bingbong.aiff", `content-available`: Int = 0)
 case class ApnsNotification(deviceToken: String, aps: Payload, identifier: Int, expiry: Int)
 
 trait ApnsDelegate {
@@ -55,7 +55,7 @@ class ApnsConnection(factory: SocketFactory, host: String, port: Int, proxy: Opt
                      delegate: ApnsDelegate, errorDetection: Boolean, cacheLength: Int,
                      autoAdjustCacheLength: Boolean, readTimeout: Int, connectTimeout: Int) extends Actor with ActorLogging {
 
-  var socket: Socket =  {
+  var socket: Socket = {
     val s = factory.createSocket(host, port)
     s.setSoTimeout(readTimeout)
     s.setKeepAlive(true)
@@ -63,10 +63,10 @@ class ApnsConnection(factory: SocketFactory, host: String, port: Int, proxy: Opt
     s
   }
 
-  override def preRestart(reason : scala.Throwable, message : scala.Option[scala.Any]) = {
+  override def preRestart(reason: scala.Throwable, message: scala.Option[scala.Any]) = {
     message match {
       case Some(m) => self ! m
-      case None =>
+      case None    =>
     }
   }
 
@@ -79,8 +79,7 @@ class ApnsConnection(factory: SocketFactory, host: String, port: Int, proxy: Opt
         socket.getOutputStream().write(payload)
         socket.getOutputStream().flush()
         delegate.messageSent(notification)
-      }
-      catch {
+      } catch {
         case e: SSLHandshakeException =>
           log.error("connect failed", e)
           throw e
